@@ -1,31 +1,36 @@
 const express = require("express");
 const axios = require("axios");
+const fs = require("fs");
 
 const app = express();
 app.use(express.json());
+app.use(express.static("public"));
 
-const API_KEY = "SUA_API_AQUI";
+const API_KEY = process.env.API_KEY;
 
-// Rota teste
-app.get("/", (req, res) => {
-  res.send("Servidor funcionando 🔥");
+const produtos = JSON.parse(fs.readFileSync("produtos.json"));
+let estoque = JSON.parse(fs.readFileSync("estoque.json"));
+
+app.get("/produtos", (req, res) => {
+  res.json(produtos);
 });
 
-// Criar pagamento PIX
-app.post("/pix", async (req, res) => {
-  try {
-    const response = await axios.post(
-      "https://api.promisse.com.br/v1/pix",
-      { amount: 1000 },
-      {
-        headers: { Authorization: API_KEY }
-      }
-    );
+app.post("/checkout", async (req, res) => {
+  const { itens } = req.body;
 
-    res.json(response.data);
-  } catch (err) {
-    res.status(500).json({ erro: "Erro no PIX" });
-  }
+  let total = 0;
+  itens.forEach(id => {
+    const p = produtos.find(x => x.id == id);
+    total += p.preco;
+  });
+
+  const response = await axios.post(
+    "https://api.promisse.com.br/v1/pix",
+    { amount: total },
+    { headers: { Authorization: API_KEY } }
+  );
+
+  res.json(response.data);
 });
 
-app.listen(3000, () => console.log("Rodando..."));
+app.listen(3000, () => console.log("🔥 Rodando"));
