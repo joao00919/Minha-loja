@@ -33,4 +33,5 @@ app.post("/checkout", async (req, res) => {
   res.json(response.data);
 });
 
-app.listen(3000, () => console.log("🔥 Rodando"));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log("🔥 Rodando"));
