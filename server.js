@@ -35,3 +35,20 @@ app.post("/checkout", async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log("🔥 Rodando"));
+
+app.post("/webhook", (req, res) => {
+  const data = req.body;
+
+  if (data.status === "paid") {
+    const produtoId = data.metadata.produtoId;
+
+    let estoque = JSON.parse(fs.readFileSync("estoque.json"));
+    const item = estoque[produtoId]?.shift();
+
+    fs.writeFileSync("estoque.json", JSON.stringify(estoque, null, 2));
+
+    console.log("ENTREGAR:", item);
+  }
+
+  res.sendStatus(200);
+});
