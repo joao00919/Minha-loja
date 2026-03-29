@@ -1,1 +1,4 @@
-
+{
+  "1": ["codigo1", "codigo2"],
+  "2": ["conta1:senha"]
+}
