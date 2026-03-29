@@ -1,1 +1,4 @@
-
+[
+  { "id": 1, "nome": "100 Robux", "preco": 1000 },
+  { "id": 2, "nome": "Conta Premium", "preco": 2500 }
+]
