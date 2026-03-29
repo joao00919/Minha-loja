@@ -18,6 +18,17 @@ app.get("/produtos", (req, res) => {
 app.post("/checkout", async (req, res) => {
   const { itens } = req.body;
 
+  app.post("/webhook", (req, res) => {
+  try {
+    console.log("Webhook recebido:", req.body);
+
+    res.sendStatus(200); // MUITO IMPORTANTE
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(200);
+  }
+});
+  
   let total = 0;
   itens.forEach(id => {
     const p = produtos.find(x => x.id == id);
