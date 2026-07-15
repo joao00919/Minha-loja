@@ -1,11 +1,63 @@
 {
-  "name": "loja",
+  "name": "bot-manager",
   "version": "1.0.0",
-  "main": "server.js",
+  "description": "Bot Manager - Gerenciamento de aplicações, licenças e pagamentos PIX via Discord",
+  "main": "dist/index.js",
+  "type": "module",
   "scripts": {
-    "start": "node server.js"
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "build": "tsc",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "format": "prettier --write 'src/**/*.ts'",
+    "format:check": "prettier --check 'src/**/*.ts'",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio",
+    "prisma:validate": "prisma validate",
+    "commands:dev": "tsx src/commands/dev-register.ts",
+    "commands:global": "tsx src/commands/global-register.ts",
+    "test": "jest --passWithNoTests",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "typecheck": "tsc --noEmit"
   },
+  "keywords": [
+    "discord",
+    "bot",
+    "payment",
+    "pix",
+    "management"
+  ],
+  "author": "Bot Manager",
+  "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2"
+    "discord.js": "^14.14.1",
+    "@prisma/client": "^5.7.1",
+    "zod": "^3.22.4",
+    "winston": "^3.11.0",
+    "dotenv": "^16.3.1",
+    "uuid": "^9.0.1",
+    "node-qrcode": "^1.6.0",
+    "crypto": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "@types/jest": "^29.5.11",
+    "@typescript-eslint/eslint-plugin": "^6.16.0",
+    "@typescript-eslint/parser": "^6.16.0",
+    "eslint": "^8.56.0",
+    "prettier": "^3.1.1",
+    "typescript": "^5.3.3",
+    "tsx": "^4.7.0",
+    "prisma": "^5.7.1",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
